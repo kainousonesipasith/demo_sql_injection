@@ -1,0 +1,77 @@
+add code to process.php
+
+
+---------------    # protect code    -------------------------
+
+<?php
+include 'db.php';
+
+$username = $_GET['username'];
+$password = $_GET['password'];
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+$stmt->bind_param("ss", $username, $password);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+if ($result && $result->num_rows > 0) {
+    echo "<h3 style='color:green;'>Login Success!</h3>";
+} else {
+    echo "<h3 style='color:red;'>Login Failed!</h3>";
+}
+
+$conn->close();
+?>
+
+
+
+
+---------------    #not protect code    -------------------------
+
+<?php
+include 'db.php';
+
+
+$sql = "SELECT * FROM users WHERE username = '" . $_GET['username'] . "' AND password = '" . $_GET['password'] . "'";
+
+
+echo "<p>SQL ที่ใช้: <code>" . htmlspecialchars($sql) . "</code></p>";
+
+$result = $conn->query($sql);
+
+if ($result && $result->num_rows > 0) {
+
+    echo "<h3 style='color:green;'>Login Success!</h3>";
+    
+    
+} else {
+    echo "<h3 style='color:red;'>Login Fail!</h3>";
+
+}
+$conn->close();
+?>
+
+
+
+$sql = "SELECT * FROM users WHERE username = '" . $_GET['username'] . "' AND password = '" . $_GET['password'] . "'";
+
+1 true 
+0 false 
+
+1 or 1 = 1
+1 or 0 = 1
+0 or 1 = 1
+0 or 0 = 0
+
+1 and 1 = 1
+1 and 0 = 0
+0 and 1 = 0
+0 and 0 = 0
+
+injection with this username = ' OR '1'='1'  ' OR 1=1 #    ' OR 1=1 /* 
+
+'' OR '1'='1' == 1
+
+$sql = "SELECT * FROM users WHERE username = ''' AND password = '2004'";
+
