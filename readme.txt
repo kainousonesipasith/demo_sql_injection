@@ -1,8 +1,11 @@
 first add the project to " C:\xampp\htdocs "
 
+open xampp and start Apache and MySQL
+
+
+
 
 $sql = "SELECT * FROM users WHERE username = '" . $_GET['username'] . "' AND password = '" . $_GET['password'] . "'";
-
 
 
 injection with this username =  ' OR 1=1 #   ' OR 1 #    type anything here' OR 1 #
@@ -21,4 +24,5 @@ injection with this username = ' OR '1'='1'  ' OR 1=1 #    ' OR 1=1 /*
 
 '' OR '1'='1' == 1
 
-$sql = "SELECT * FROM users WHERE username = ''' AND password = '2004'";
+
+$sql = "SELECT * FROM users WHERE username = '" . $_GET['username'] . "' AND password = '" . $_GET['password'] . "'";
